@@ -1,0 +1,268 @@
+{
+	"plugin_id": "sprinkdomus",
+	"name_fr": "SprinkDomus",
+	"icon": "sprinkdomus.png",
+	"version": "1.1",
+	"creation_date": "2019-01-06",
+	"modification_date": "2019-01-06",
+	"author": "Influman",
+	"description_fr": "Arrosage automatique.",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+	"forum_link": "https://forum.eedomus.com/viewtopic.php?f=50&t=7977",
+	"parameters": 
+	[
+		{
+			"parameter": "ZONE", 
+			"description": "N° Zone Arrosage",
+			"xtype": "textfield",
+			"default_value": "1",
+			"field": "width:50, allowBlank:true"
+        },
+		{
+			"parameter": "line0",
+			"description": "",
+			"xtype": "displayfield",
+			"field": "style: 'padding: 3px;', value: '------------------------------------------------------'"
+		},
+		{
+			"parameter": "VANNE", 
+			"description": "Périphérique Actionneur Vanne",
+			"xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php?actuator_only=1'), displayField: 'label', valueField: 'id', triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: false"
+        },
+		{
+			"parameter": "FER", 
+			"description": "Valeur Vanne fermée",
+			"xtype": "textfield",
+			"default_value": "0",
+			"field": "width:50, allowBlank:true"
+        },
+		{
+			"parameter": "OUV", 
+			"description": "Valeur Vanne ouverte",
+			"xtype": "textfield",
+			"default_value": "100",
+			"field": "width:50, allowBlank:true"
+        },
+		{
+			"parameter": "line1",
+			"description": "Capteurs (falcultatif)",
+			"xtype": "displayfield",
+			"field": "style: 'padding: 3px;', value: '------------------------------------------------------'"
+		},
+		{
+			"parameter": "HUMIDITY", 
+			"description": "Périphérique Capteur Humidité (en %)",
+			"xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php?sensor_only=1'), displayField: 'label', valueField: 'id', triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: true"
+        },
+		{
+			"parameter": "PRECIPIT", 
+			"description": "Périphérique Capteur Précipitations (en mm)",
+			"xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php?sensor_only=1'), displayField: 'label', valueField: 'id', triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: true"
+        },
+		{
+			"parameter": "PREVISION", 
+			"description": "Périphérique Prévision Pluie (en mm)",
+			"xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php?sensor_only=1'), displayField: 'label', valueField: 'id', triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: true"
+        }
+	 ],
+	"scripts":
+	[
+		{
+			"name": "sprinkdomus.php"
+		}
+	],
+	"devices":
+  [
+		{
+			"device_id": "mode",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "SprinkDomus #plugin.parameters.ZONE - Mode",
+			"icon": "sprink_mode.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.ZONE,plugin.parameters.VANNE,plugin.parameters.FER,plugin.parameters.OUV",
+				"VAR2": "plugin.parameters.HUMIDITY,plugin.parameters.PRECIPIT,plugin.parameters.PREVISION",
+				"VAR3": "50",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "0", "description": "Manuel", "icon": "sprink_modemanuel.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setmode&value=[RAW_VALUE]&zone=[VAR1]&sensor=[VAR2]&seuil=[VAR3]" },
+				{ "value": "1", "description": "Auto", "icon": "sprink_modeauto1.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setmode&value=[RAW_VALUE]&zone=[VAR1]&sensor=[VAR2]&seuil=[VAR3]" },
+				{ "value": "2", "description": "Auto - Humidité", "icon": "sprink_modeauto2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setmode&value=[RAW_VALUE]&zone=[VAR1]&sensor=[VAR2]&seuil=[VAR3]" },
+				{ "value": "3", "description": "Auto - Précipitations", "icon": "sprink_modeauto3.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setmode&value=[RAW_VALUE]&zone=[VAR1]&sensor=[VAR2]&seuil=[VAR3]" },
+				{ "value": "4", "description": "Auto - Humidité - Précipitations", "icon": "sprink_modeauto4.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setmode&value=[RAW_VALUE]&zone=[VAR1]&sensor=[VAR2]&seuil=[VAR3]" },
+				{ "value": "5", "description": "Auto - Précipitations - Prévision", "icon": "sprink_modeauto5.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setmode&value=[RAW_VALUE]&zone=[VAR1]&sensor=[VAR2]&seuil=[VAR3]" },
+				{ "value": "99", "description": "Arrêt", "icon": "sprink_modearret.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setmode&value=[RAW_VALUE]&zone=[VAR1]&sensor=[VAR2]&seuil=[VAR3]" }
+			]
+		},
+		{
+			"device_id": "action",
+			"parent_id": "mode",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "SprinkDomus #plugin.parameters.ZONE - Statut",
+			"icon": "sprink_action.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.ZONE,plugin.parameters.VANNE,plugin.parameters.FER,plugin.parameters.OUV",
+				"VAR2": "plugin.parameters.HUMIDITY,plugin.parameters.PRECIPIT,plugin.parameters.PREVISION",
+				"VAR3": "50",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=sprinkdomus.php&action=getstatus&zone=[VAR1]",
+				"RAW_XPATH": "/SPRINKDOMUS/STATUS",
+				"POLLING": "1"
+			}
+		},
+		{
+			"device_id": "agenda",
+			"parent_id": "mode",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "SprinkDomus #plugin.parameters.ZONE - Agenda",
+			"icon": "sprink_progagenda.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.ZONE,plugin.parameters.VANNE,plugin.parameters.FER,plugin.parameters.OUV",
+				"VAR2": "plugin.parameters.HUMIDITY,plugin.parameters.PRECIPIT,plugin.parameters.PREVISION",
+				"VAR3": "50",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "ALL", "description": "Tous les jours", "icon": "sprink_progagenda.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setagenda&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "ALLOWE", "description": "Sauf Week-End", "icon": "sprink_progagenda.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setagenda&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "PAIR", "description": "Jours pairs", "icon": "sprink_progagenda.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setagenda&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "IMPAIR", "description": "Jours impairs", "icon": "sprink_progagenda.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setagenda&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "LUN", "description": "Lundi", "icon": "sprink_progagenda.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setagenda&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "LUN-JEU", "description": "Lundi, jeudi", "icon": "sprink_progagenda.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setagenda&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "LUN-MER-VEN", "description": "Lundi, mecredi, vendredi", "icon": "sprink_progagenda.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setagenda&value=[RAW_VALUE]&zone=[VAR1]" }
+			]
+		},
+		{
+			"device_id": "duree1",
+			"parent_id": "mode",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "SprinkDomus #plugin.parameters.ZONE - Durée 1",
+			"icon": "sprink_progduree1.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.ZONE,plugin.parameters.VANNE,plugin.parameters.FER,plugin.parameters.OUV",
+				"VAR2": "plugin.parameters.HUMIDITY,plugin.parameters.PRECIPIT,plugin.parameters.PREVISION",
+				"VAR3": "50",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "5", "description": "5 mn", "icon": "sprink_progduree1.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setduree1&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "10", "description": "10 mn", "icon": "sprink_progduree1.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setduree1&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "15", "description": "15 mn", "icon": "sprink_progduree1.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setduree1&value=[RAW_VALUE]&zone=[VAR1]" }
+			]
+		},
+		{
+			"device_id": "duree2",
+			"parent_id": "mode",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "SprinkDomus #plugin.parameters.ZONE - Durée 2",
+			"icon": "sprink_progduree2.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.ZONE,plugin.parameters.VANNE,plugin.parameters.FER,plugin.parameters.OUV",
+				"VAR2": "plugin.parameters.HUMIDITY,plugin.parameters.PRECIPIT,plugin.parameters.PREVISION",
+				"VAR3": "50",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "5", "description": "5 mn", "icon": "sprink_progduree2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setduree2&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "10", "description": "10 mn", "icon": "sprink_progduree2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setduree2&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "15", "description": "15 mn", "icon": "sprink_progduree2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=setduree2&value=[RAW_VALUE]&zone=[VAR1]" }
+			]
+		},
+		{
+			"device_id": "heure1",
+			"parent_id": "mode",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "SprinkDomus #plugin.parameters.ZONE - Horaire 1",
+			"icon": "sprink_progh1.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.ZONE,plugin.parameters.VANNE,plugin.parameters.FER,plugin.parameters.OUV",
+				"VAR2": "plugin.parameters.HUMIDITY,plugin.parameters.PRECIPIT,plugin.parameters.PREVISION",
+				"VAR3": "50",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "05:00", "description": "05:00", "icon": "sprink_progh1.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=seth1&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "22:00", "description": "22:00", "icon": "sprink_progh1.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=seth1&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "23:00", "description": "23:00", "icon": "sprink_progh1.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=seth1&value=[RAW_VALUE]&zone=[VAR1]" }
+			]
+		},
+		{
+			"device_id": "heure2",
+			"parent_id": "mode",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "SprinkDomus #plugin.parameters.ZONE - Horaire 2",
+			"icon": "sprink_progh2.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.ZONE,plugin.parameters.VANNE,plugin.parameters.FER,plugin.parameters.OUV",
+				"VAR2": "plugin.parameters.HUMIDITY,plugin.parameters.PRECIPIT,plugin.parameters.PREVISION",
+				"VAR3": "50",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "99:99", "description": "--:--", "icon": "sprink_progh2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=seth2&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "05:00", "description": "05:00", "icon": "sprink_progh2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=seth2&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "22:00", "description": "22:00", "icon": "sprink_progh2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=seth2&value=[RAW_VALUE]&zone=[VAR1]" },
+				{ "value": "23:00", "description": "23:00", "icon": "sprink_progh2.png", "http_url": "http://localhost/script/?exec=sprinkdomus.php", "http_type": "GET",  "http_params": "&action=seth2&value=[RAW_VALUE]&zone=[VAR1]" }
+			]
+		}
+	]
+}
