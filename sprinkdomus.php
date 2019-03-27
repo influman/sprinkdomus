@@ -1,7 +1,7 @@
 <?php
    $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>";      
    //***********************************************************************************************************************
-   // V1.1 : SprinkDomus - Arrosage automatique / Influman 2019
+   // V1.2 : SprinkDomus - Arrosage automatique / Influman 2019
    
 	// recuperation des infos depuis la requete
     $action = getArg("action", true, '');
@@ -212,6 +212,7 @@
 	if ($action == 'getstatus') {
 		$mode = '?';
 		$status = 0;
+		$datedernier = 0;
 		// recuperation des données de la zone
 		if ($ValidZone) {
 			// récupération du mode
@@ -275,6 +276,7 @@
 				$endtime = 0;
 				$stopauto = true;
 				$status = 0;
+				$datedernier = $maintenant;
 			}
 			// **********************************************************
 			// temps d'arrosage non écoulé
@@ -574,6 +576,9 @@
 					$texte .= "|PREV";
 				}
 				$texte .= ")";
+			}
+			if ($datedernier != 0) {
+				$texte .= " Dernier ".date('D d M H:i',$datedernier);
 			}
 		}
 		if ($status == 1) { //Arrosage Auto en cours
